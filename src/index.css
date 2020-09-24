@@ -43,7 +43,8 @@ main {
 .bookmarks-container {
   border: 1px solid black;
   width: 90%;
-  margin: 25px 0;
+  min-width: 500px;
+  margin: 2px 0;
 }
 
 .bookmark {
@@ -60,6 +61,36 @@ main {
   margin: 5px 0;
 }
 
-.bookmark-hide {
+.hidden {
   display: none;
+}
+
+.add-bookmark-form {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  border: 1px dotted black;
+}
+
+.button-container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+}
+
+.add-bookmark-form form {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.add-bookmark-form input {
+  width: 220px;
+}
+
+.add-bookmark-form textarea {
+  resize: none;
+  width: 220px;
+  min-height: 150px;
 }

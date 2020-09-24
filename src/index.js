@@ -1,13 +1,16 @@
 import $ from 'jquery';
 import css from './index.css';
-import buttons from './buttons';
-import render from './render';
+import templates from './templates';
+import store from './store';
+import bookmarks from './bookmarks';
 
 function main() {
-  buttons.addButtonListener();
-  buttons.filterButtonListener();
-  buttons.bookmarkClickListener();
-  render.render();
+  bookmarks.addButtonListener();
+  bookmarks.submitButtonListener();
+  bookmarks.filterButtonListener();
+  bookmarks.bookmarkClickListener();
+  bookmarks.bookmarkDeleteListener();
+  bookmarks.render();
 }
 
 $(main());
