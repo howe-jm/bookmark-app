@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import css from './index.css';
+import cuid from 'cuid';
 import templates from './templates';
 import store from './store';
 
@@ -7,7 +8,6 @@ function addButtonListener() {
   $('#bookmarks-toolbar').on('click', '#js-add-new-bookmark', function (event) {
     event.preventDefault();
     store.addingBookmark = !store.addingBookmark;
-    console.log('Add bookmark: ' + store.addingBookmark);
     render();
   });
 }
@@ -15,8 +15,17 @@ function addButtonListener() {
 function submitButtonListener() {
   $('#bookmarks-toolbar').on('click', '#js-submit-bookmark', function (event) {
     event.preventDefault();
-    store.addElement('test', 'testurl', 'testdescription', 5);
-    store.addingBookmark = !store.addingBookmark;
+    let title = $('#js-bookmark-title').val();
+    let url = $('#js-bookmark-url').val();
+    let rating = $('#js-rating').val();
+    if (rating > 5) {
+      rating = 5;
+    } else if (rating < 1) {
+      rating = 1;
+    }
+    let desc = $('#js-bookmark-description').val();
+    let dataObj = { id: cuid(), name: title, url: url, rating: rating, description: desc, collapsed: true };
+    store.addElement(dataObj);
     render();
   });
 }
@@ -29,9 +38,8 @@ function filterButtonListener() {
 }
 
 function bookmarkClickListener() {
-  $('#bookmarks-list').on('click', '.js-bookmark', function (event) {
-    let id = getItemIdFromElement(event.currentTarget);
-    console.log('You clicked the thing!' + id);
+  $('#bookmarks-list').on('click', '.js-bookmark', (event) => {
+    const id = getItemIdFromElement(event.currentTarget);
     store.collapseElement(id);
     render();
   });
@@ -41,7 +49,6 @@ function bookmarkDeleteListener() {
   $('#bookmarks-list').on('click', '#js-delete-bookmark', function (event) {
     event.preventDefault();
     let id = getItemIdFromElement(event.currentTarget);
-    console.log('Delete clicked');
     store.deleteElement(id);
     render();
   });

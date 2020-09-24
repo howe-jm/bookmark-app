@@ -94,3 +94,9 @@ main {
   width: 220px;
   min-height: 150px;
 }
+
+#js-bookmark-description-edit {
+  resize: none;
+  width: 400px;
+  min-height: 150px;
+}
