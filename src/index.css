@@ -34,6 +34,12 @@ main {
   margin: 0px 10px;
 }
 
+#bookmarks-list {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
 .bookmarks-container {
   border: 1px solid black;
   width: 90%;
