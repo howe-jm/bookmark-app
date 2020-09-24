@@ -1,23 +1,22 @@
 {
-  "name": "shopping-list-webpack-day",
+  "name": "bookmark-app",
   "version": "1.0.0",
   "description": "Please reference the startup instructions within your curriculum.",
-  "main": "./index.js",
-  "dependencies": {
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "jquery": "^3.5.1"
-  },
+  "main": "index.js",
   "devDependencies": {
-    "css-loader": "^4.3.0",
-    "cuid": "^2.1.8",
-    "file-loader": "^6.1.0",
-    "html-webpack-plugin": "^4.5.0",
-    "jquery": "^3.5.1",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.40.1",
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0",
+    "source-map-loader": "^1.0.0"
+  },
+  "dependencies": {
+    "cuid": "^2.1.6",
+    "jquery": "^3.4.1",
+    "normalize.css": "^8.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,13 +25,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thinkful-ei-shark/webpack-day-jason.git"
+    "url": "git+https://github.com/howe-jm/bookmark-app"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/thinkful-ei-shark/webpack-day-jason/issues"
+    "url": "https://github.com/howe-jm/bookmark-app/issues"
   },
-  "homepage": "https://github.com/thinkful-ei-shark/webpack-day-jason#readme"
+  "homepage": "https://github.com/howe-jm/bookmark-app#readme"
 }

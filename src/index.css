@@ -6,6 +6,8 @@ body {
 
 header {
   display: flex;
+  flex-flow: column wrap;
+  align-items: center;
   border: 1px solid black;
   width: 600px;
 }
@@ -40,4 +42,18 @@ main {
 
 .bookmark {
   border: 1px dotted black;
+}
+
+.bookmark-body {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.bookmark-body input {
+  margin: 5px 0;
+}
+
+.bookmark-hide {
+  display: none;
 }
