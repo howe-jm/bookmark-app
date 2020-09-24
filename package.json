@@ -1,0 +1,38 @@
+{
+  "name": "shopping-list-webpack-day",
+  "version": "1.0.0",
+  "description": "Please reference the startup instructions within your curriculum.",
+  "main": "./index.js",
+  "dependencies": {
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "css-loader": "^4.3.0",
+    "cuid": "^2.1.8",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.5.0",
+    "jquery": "^3.5.1",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkful-ei-shark/webpack-day-jason.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinkful-ei-shark/webpack-day-jason/issues"
+  },
+  "homepage": "https://github.com/thinkful-ei-shark/webpack-day-jason#readme"
+}

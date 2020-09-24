@@ -1,0 +1,43 @@
+body {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  border: 1px solid black;
+  width: 600px;
+}
+
+main {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-around;
+  border: 1px solid black;
+  margin-top: -1px;
+  width: 600px;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-flow: column wrap;
+  width: 200px;
+  border: 1px dotted black;
+  align-items: center;
+}
+
+.button-container input {
+  margin: 0px 10px;
+}
+
+.bookmarks-container {
+  border: 1px solid black;
+  width: 90%;
+  margin: 25px 0;
+}
+
+.bookmark {
+  border: 1px dotted black;
+}
