@@ -49,10 +49,18 @@ function submitButtonListener() {
   });
 }
 
-function filterButtonListener() {
+/* function filterButtonListener() {
   $('#bookmarks-toolbar').on('click', '#js-filter-bookmarks', function (event) {
     event.preventDefault();
     console.log('Filter bookmarks');
+  });
+} */
+
+function filterSelectorListener() {
+  $('#bookmarks-toolbar').on('change', function () {
+    let rateVal = `${$(this).find(':selected').val()}`;
+    store.filterResultsBy(rateVal);
+    $(this).val(rateVal);
   });
 }
 
@@ -108,7 +116,18 @@ function bookmarkSubmitEditListner() {
       $('.bookmark-body-edit').addClass('error-container');
       $('.https-edit-error').removeClass('hidden');
     } else {
-      console.log('Did we make it here?');
+      let id = getItemIdFromElement(event.currentTarget);
+      api.editItem(dataObj, id).then(() =>
+        api
+          .fetchBookmarks()
+          .then((res) => res.json())
+          .then((items) => {
+            store.STORE = [];
+            items.forEach((item) => store.localPushItem(item));
+            render();
+          })
+      );
+      // Reserved for API PATCH call.
     }
   });
 }
@@ -118,6 +137,7 @@ function getItemIdFromElement(item) {
 }
 
 function render() {
+  $('#js-filter-bookmarks').val(`${store.sortedBy}`);
   $('#bookmarks-toolbar').html(templates.toolbarTemplate());
   $('#bookmarks-list').html(generateBookmarkString(store.STORE));
 }
@@ -133,7 +153,8 @@ function generateBookmarkString(store) {
 function bindListeners() {
   addButtonListener();
   submitButtonListener();
-  filterButtonListener();
+  // filterButtonListener();
+  filterSelectorListener();
   bookmarkClickListener();
   bookmarkDeleteListener();
   bookmarkEditListener();

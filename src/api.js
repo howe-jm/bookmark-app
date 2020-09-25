@@ -14,6 +14,18 @@ function addItem(obj) {
   });
 }
 
+function editItem(obj, id) {
+  const newItem = JSON.stringify(obj);
+
+  return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks/` + id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: newItem,
+  });
+}
+
 function deleteItem(id) {
   return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks/` + id, {
     method: 'DELETE',
@@ -24,4 +36,5 @@ export default {
   fetchBookmarks,
   addItem,
   deleteItem,
+  editItem,
 };

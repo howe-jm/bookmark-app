@@ -4,7 +4,8 @@ import api from './api';
 const STORE = [];
 
 const addingBookmark = false;
-const editBookmark = false;
+const editingBookmark = false;
+let sortedBy = '2';
 
 function findById(id) {
   return this.STORE.find((currentItem) => currentItem.id === id);
@@ -28,20 +29,28 @@ function collapseElement(id) {
 function editElement(id) {
   let newItem = this.findById(id);
   Object.assign(newItem, { editing: true });
+  editingBookmark;
 }
 
 function deleteElement(id) {
   this.STORE = this.STORE.filter((currentItem) => currentItem.id !== id);
 }
 
+function filterResultsBy(val) {
+  sortedBy = val;
+  console.log(sortedBy);
+}
+
 export default {
   STORE,
   addingBookmark,
-  editBookmark,
+  editingBookmark,
+  sortedBy,
   collapseElement,
   findById,
   deleteElement,
   addElement,
   localPushItem,
   editElement,
+  filterResultsBy,
 };

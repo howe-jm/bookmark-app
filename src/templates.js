@@ -6,7 +6,16 @@ function toolbarTemplate() {
     return `
     <div class="button-container">
       <form>
-        <input type="button" id="js-add-new-bookmark" value="Add New" /><input type="button" id="js-filter-bookmarks" value="Filter By" />
+        <input type="button" id="js-add-new-bookmark" value="Add New" />
+        <label for="select-rating">Minimum Rating: </label>
+        <select name="select-rating" id="js-filter-bookmarks" />
+          <option value="Show All">Show All</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
       </form>
     </div>
     `;
@@ -14,7 +23,15 @@ function toolbarTemplate() {
     return `
     <div class="button-container">
       <form>
-        <input type="button" id="js-add-new-bookmark" value="Add New" /><input type="button" id="js-filter-bookmarks" value="Filter By" />
+        <input type="button" id="js-add-new-bookmark" value="Add New" /><label for="select-rating">Minimum Rating: </label>
+        <select name="select-rating" id="js-filter-bookmarks" value="Filter By" />
+          <option value="Show All">Show All</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
       </form>
     </div>
     <div id="js-add-bookmark-form" class="add-bookmark-form">
