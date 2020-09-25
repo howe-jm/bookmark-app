@@ -50,10 +50,18 @@ function submitButtonListener() {
 }
 
 function filterSelectorListener() {
-  $('#bookmarks-toolbar').on('change', function () {
+  $('#bookmarks-toolbar').on('change', '#js-filter-bookmarks', function () {
     let rateVal = `${$(this).find(':selected').val()}`;
-    store.filterResultsBy(rateVal);
-    $(this).val(rateVal);
+    store.sortedBy = rateVal;
+    store.filterResultsBy();
+    api
+      .fetchBookmarks()
+      .then((res) => res.json())
+      .then((items) => {
+        store.STORE = [];
+        items.forEach((item) => store.localPushItem(item));
+      });
+    render();
   });
 }
 
@@ -139,7 +147,6 @@ function getItemIdFromElement(item) {
 }
 
 function render() {
-  $('#js-filter-bookmarks').val(`${store.sortedBy}`);
   $('#bookmarks-toolbar').html(templates.toolbarTemplate());
   $('#bookmarks-list').html(generateBookmarkString(store.STORE));
 }

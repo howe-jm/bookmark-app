@@ -5,7 +5,7 @@ const STORE = [];
 
 const addingBookmark = false;
 const editingBookmark = false;
-let sortedBy = 'Show All';
+let sortedBy = '1';
 
 function findById(id) {
   return this.STORE.find((currentItem) => currentItem.id === id);
@@ -37,8 +37,7 @@ function deleteElement(id) {
 }
 
 function filterResultsBy(val) {
-  sortedBy = val;
-  console.log(sortedBy);
+  this.STORE = this.STORE.filter((currentItem) => currentItem.rating <= this.sortedBy);
 }
 
 function getItemURL(id) {

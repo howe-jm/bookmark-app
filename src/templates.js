@@ -57,7 +57,7 @@ function toolbarTemplate() {
 }
 
 function bookmarksList(item) {
-  if (!item.collapsed) {
+  if (item.collapsed) {
     return `
     <div class="bookmarks-container" data-item-id="${item.id}">
       <div class="bookmark js-bookmark">
