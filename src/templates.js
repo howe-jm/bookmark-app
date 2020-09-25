@@ -62,14 +62,14 @@ function bookmarksList(item) {
             <p><label for="bookmark-title-edit">Give your bookmark a name:</label></p>
             <p><input type="text" name="bookmark-title-edit" class="js-bookmark-title-edit" value="${item.title}" placeholder="Bookmark title..." required></p>
           </div>
-          <div class="bookmark-body">
+          <div class="bookmark-body-edit">
             <p><label for="rating-edit">Rating (between 1 and 5):</label></p>
             <p><input type="number" class="rating-edit" name="rating-edit" min="1" max="5" value="${item.rating}" required></p>
             <p><label for="bookmark-url-edit">Edit your URL:</label></p>
             <p><input type="url" name="bookmark-url-edit" class="js-bookmark-url-edit" value="${item.url}" placeholder="https://..." required></p>
             <p>Write a short description (optional)</p>
             <p><textarea name="bookmark-description-edit" class="js-bookmark-description-edit" placeholder="Description of website...">${item.desc}</textarea></p>
-            <p class="bookmark-error-text">Title, URL, and Rating must be filled out!</p> 
+            <p class="bookmark-error-text hidden">Title, URL, and Rating must be filled out!</p> 
             <input type="submit" name="submit-bookmark" class="js-submit-edit" value="Submit Edited Bookmark">
           </form>
         </div>

@@ -76,6 +76,12 @@ main {
   align-items: center;
 }
 
+.bookmark-body-edit {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
 .bookmark-body input {
   margin: 5px 0;
 }

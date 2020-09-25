@@ -102,22 +102,12 @@ function bookmarkSubmitEditListner() {
     }
     let dataObj = { title: title, url: url, desc: desc, rating: rating, desc: desc };
     if (title === '' || title === undefined || url === '' || url === undefined || rating === undefined) {
-      $('#js-add-bookmark-form').addClass('error-container');
-      $('.error-text').removeClass('hidden');
+      $('.bookmark-body-edit').addClass('error-container');
+      $('.bookmark-error-text').removeClass('hidden');
     } else if (url[4] != 's' || url[5] != ':') {
-      $('.https-error').addClass('error-container');
-      $('.https-text').removeClass('hidden');
+      $('.bookmark-body-edit').addClass('error-container');
+      $('.bookmark-error-text').removeClass('hidden');
     } else {
-      api.addItem(dataObj).then(() =>
-        api
-          .fetchBookmarks()
-          .then((res) => res.json())
-          .then((items) => {
-            store.STORE = [];
-            items.forEach((item) => store.localPushItem(item));
-            render();
-          })
-      );
       console.log('Did we make it here?');
     }
   });
