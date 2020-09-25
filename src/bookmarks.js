@@ -106,7 +106,7 @@ function bookmarkSubmitEditListner() {
       $('.bookmark-error-text').removeClass('hidden');
     } else if (url[4] != 's' || url[5] != ':') {
       $('.bookmark-body-edit').addClass('error-container');
-      $('.bookmark-error-text').removeClass('hidden');
+      $('.https-edit-error').removeClass('hidden');
     } else {
       console.log('Did we make it here?');
     }

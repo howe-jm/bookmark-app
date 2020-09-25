@@ -132,6 +132,7 @@ main {
 }
 
 .https-text,
-.bookmark-error-text {
+.bookmark-error-text,
+.https-edit-error {
   color: red;
 }

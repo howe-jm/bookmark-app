@@ -67,6 +67,7 @@ function bookmarksList(item) {
             <p><input type="number" class="rating-edit" name="rating-edit" min="1" max="5" value="${item.rating}" required></p>
             <p><label for="bookmark-url-edit">Edit your URL:</label></p>
             <p><input type="url" name="bookmark-url-edit" class="js-bookmark-url-edit" value="${item.url}" placeholder="https://..." required></p>
+            <p class="https-edit-error hidden">Must use https!</p>
             <p>Write a short description (optional)</p>
             <p><textarea name="bookmark-description-edit" class="js-bookmark-description-edit" placeholder="Description of website...">${item.desc}</textarea></p>
             <p class="bookmark-error-text hidden">Title, URL, and Rating must be filled out!</p> 
