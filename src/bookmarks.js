@@ -44,17 +44,10 @@ function submitButtonListener() {
             render();
           })
       );
-      console.log('Did we make it here?');
+      store.addingBookmark = !store.addingBookmark;
     }
   });
 }
-
-/* function filterButtonListener() {
-  $('#bookmarks-toolbar').on('click', '#js-filter-bookmarks', function (event) {
-    event.preventDefault();
-    console.log('Filter bookmarks');
-  });
-} */
 
 function filterSelectorListener() {
   $('#bookmarks-toolbar').on('change', function () {
@@ -80,6 +73,15 @@ function bookmarkDeleteListener() {
       store.deleteElement(id);
       render();
     });
+  });
+}
+
+function bookmarkVisitSiteListner() {
+  $('#bookmarks-list').on('click', '.js-visit-site', (event) => {
+    event.preventDefault();
+    const id = getItemIdFromElement(event.currentTarget);
+    const url = store.getItemURL(id);
+    window.open(`${url}`);
   });
 }
 
@@ -153,7 +155,7 @@ function generateBookmarkString(store) {
 function bindListeners() {
   addButtonListener();
   submitButtonListener();
-  // filterButtonListener();
+  bookmarkVisitSiteListner();
   filterSelectorListener();
   bookmarkClickListener();
   bookmarkDeleteListener();

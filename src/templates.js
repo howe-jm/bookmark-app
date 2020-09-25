@@ -66,7 +66,7 @@ function bookmarksList(item) {
             <p>Rating: ${item.rating}</p>
           </span>
           <span>
-            <input type="button" id="js-expand-bookmark" value="Collapse" /><input type="button" id="js-delete-bookmark" value="Delete" />
+            <input type="button" id="js-expand-bookmark" value="Expand" />
           </span>
         </div>
       </div>
@@ -102,12 +102,18 @@ function bookmarksList(item) {
           <p>Rating: ${item.rating}</p>
         </span>
         <span>
-          <input type="button" id="js-expand-bookmark" value="Collapse" /><input type="button" id="js-delete-bookmark" value="Delete" /><input type="button" id="js-edit-bookmark" value="Edit" />
+          <input type="button" id="js-expand-bookmark" value="Collapse" />
         </span>
       </div>
       <div class="bookmark-body">
-        <form><input type="button" id="js-visit-site" value="Visit Site" /></form>
+        <form><input type="button" class="js-visit-site" value="Visit Site" /></form>
+        <p class="desc-header"><h3>Description:</h3></div>
+        <div class="bookmark-description">
         <p>${item.desc}</p>
+        </div>
+        <div class="lower-button-container">
+        <p><input type="button" id="js-delete-bookmark" value="Delete" /></p><p><input type="button" id="js-edit-bookmark" value="Edit" /></p>
+        </div>
       </div>
     </div>
       `;

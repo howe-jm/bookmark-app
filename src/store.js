@@ -5,7 +5,7 @@ const STORE = [];
 
 const addingBookmark = false;
 const editingBookmark = false;
-let sortedBy = '2';
+let sortedBy = 'Show All';
 
 function findById(id) {
   return this.STORE.find((currentItem) => currentItem.id === id);
@@ -41,6 +41,11 @@ function filterResultsBy(val) {
   console.log(sortedBy);
 }
 
+function getItemURL(id) {
+  let item = this.findById(id);
+  return item.url;
+}
+
 export default {
   STORE,
   addingBookmark,
@@ -53,4 +58,5 @@ export default {
   localPushItem,
   editElement,
   filterResultsBy,
+  getItemURL,
 };
