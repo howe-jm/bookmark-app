@@ -1,68 +1,98 @@
 import store from './store.js';
+import api from './api';
 
 function toolbarTemplate() {
   if (store.addingBookmark === false) {
-    return `<div class="button-container">
-        <form><input type="button" id="js-add-new-bookmark" value="Add New" /><input type="button" id="js-filter-bookmarks" value="Filter By" /></form>
-      </div>`;
+    return `
+    <div class="button-container">
+      <form>
+        <input type="button" id="js-add-new-bookmark" value="Add New" /><input type="button" id="js-filter-bookmarks" value="Filter By" />
+      </form>
+    </div>
+    `;
   } else {
     return `
     <div class="button-container">
-        <form><input type="button" id="js-add-new-bookmark" value="Add New" /><input type="button" id="js-filter-bookmarks" value="Filter By" /></form>
-      </div>
+      <form>
+        <input type="button" id="js-add-new-bookmark" value="Add New" /><input type="button" id="js-filter-bookmarks" value="Filter By" />
+      </form>
+    </div>
     <div id="js-add-bookmark-form" class="add-bookmark-form">
-        <h2>Add a bookmark:</h2>
+      <h2>Add a bookmark:</h2>
         <form>
-            <p><label for="bookmark-title">Give your bookmark a name:</label></p>
-            <p><input type="text" name="bookmark-title" id="js-bookmark-title" placeholder="Bookmark title..." required></p>
-            <p><label for="bookmark-url">Add your URL (must use HTTPS!):</label></p>
-            <p><input type="url" name="bookmark-url" id="js-bookmark-url" placeholder="https://..." required></p>
-            <p><label for="rating">Rating (between 1 and 5):</label></p>
-            <p><input type="number" id="js-rating" name="rating" min="1" max="5" required></p>
-            <p>Write a short description (optional)</p>
-            <p><textarea name="bookmark-description" id="js-bookmark-description" placeholder="Description of website..."></textarea></p>
-            <input type="submit" name="submit-bookmark" id="js-submit-bookmark" value="Submit Bookmark">
-            </form> 
+          <p><label for="bookmark-title">Give your bookmark a name:</label></p>
+          <p><input type="text" name="bookmark-title" id="js-bookmark-title" placeholder="Google" required></p>
+          <div class="https-error">
+            <p><label for="bookmark-url">Add your URL:</label></p>
+            <p>(e.g.: https://www.google.com)</p>
+            <p><input type="url" name="bookmark-url" id="js-bookmark-url" placeholder="https://www.google.com/" required></p>
+            <p class="https-text hidden">Must use 'https://'!</p>
+          </div>
+          <p><label for="rating">Rating (between 1 and 5):</label><input type="number" id="js-rating" name="rating" min="1" max="5" value="1" required></p>
+          <p>Write a short description (optional)</p>
+          <p><textarea name="bookmark-description" id="js-bookmark-description" placeholder="Google, the world's most ubiquitous search engine!"></textarea></p>
+          <input type="submit" name="submit-bookmark" id="js-submit-bookmark" value="Submit Bookmark">
+        </form> 
+        <p class="error-text hidden">Title, URL, and Rating must be filled out!</p>
     </div>
     `;
   }
 }
 
 function bookmarksList(item) {
-  if (item.collapsed) {
+  if (!item.collapsed) {
     return `
     <div class="bookmarks-container" data-item-id="${item.id}">
-    <div class="bookmark js-bookmark"><p>${item.name}</p></div></div>
+      <div class="bookmark js-bookmark">
+          <span>
+            ${item.title}
+            <p>Rating: ${item.rating}</p>
+          </span>
+          <span>
+            <input type="button" id="js-expand-bookmark" value="Collapse" /><input type="button" id="js-delete-bookmark" value="Delete" />
+          </span>
+        </div>
+      </div>
     `;
-  } else if (store.editBookmark === true) {
+  } else if (item.editing === true) {
     return `
     <div class="bookmarks-container" data-item-id="${item.id}">
-        <div class="bookmark js-bookmark"><p><label for="bookmark-title-edit">Give your bookmark a name:</label></p>
-        <p><input type="text" name="bookmark-title-edit" id="js-bookmark-title-edit" value=${item.title}" placeholder="Bookmark title..." required></p></div>
-        <div class="bookmark-body">
-        </form>
-        <p><label for="rating-edit">Rating (between 1 and 5):</label></p>
-        <p><input type="number" id="rating-edit" name="rating-edit" min="1" max="5" value="${item.rating}" required></p>
-        <p><label for="bookmark-url-edit">Add your URL (must use HTTPS!):</label></p>
-        <p><input type="url" name="bookmark-url-edit" id="js-bookmark-url-edit" value="${item.url}" placeholder="https://..." required></p>
-        <p>Write a short description (optional)</p>
-        <p><textarea name="bookmark-description-edit" id="js-bookmark-description-edit" placeholder="Description of website...">${item.description}</textarea></p>
-        </form>
+        <form>
+          <div class="bookmark js-bookmark">
+            <p><label for="bookmark-title-edit">Give your bookmark a name:</label></p>
+            <p><input type="text" name="bookmark-title-edit" class="js-bookmark-title-edit" value="${item.title}" placeholder="Bookmark title..." required></p>
+          </div>
+          <div class="bookmark-body">
+            <p><label for="rating-edit">Rating (between 1 and 5):</label></p>
+            <p><input type="number" class="rating-edit" name="rating-edit" min="1" max="5" value="${item.rating}" required></p>
+            <p><label for="bookmark-url-edit">Edit your URL:</label></p>
+            <p><input type="url" name="bookmark-url-edit" class="js-bookmark-url-edit" value="${item.url}" placeholder="https://..." required></p>
+            <p>Write a short description (optional)</p>
+            <p><textarea name="bookmark-description-edit" class="js-bookmark-description-edit" placeholder="Description of website...">${item.desc}</textarea></p>
+            <p class="bookmark-error-text">Title, URL, and Rating must be filled out!</p> 
+            <input type="submit" name="submit-bookmark" class="js-submit-edit" value="Submit Edited Bookmark">
+          </form>
         </div>
-        </div>
+      </div>
     `;
   } else {
-    return `<div class="bookmarks-container" data-item-id="${item.id}">
-        <div class="bookmark js-bookmark"><p>${item.title}</p></div>
-        <div class="bookmark-body">
-        <p><a href="${item.url}">${item.url}</a></p>
-        <p class="bookmark-rating js-bookmark-rating">${item.rating}</p>
-          <form><input type="button" id="js-visit-site" value="Visit Site" /><input type="button" id="js-delete-bookmark" value="Delete" /></form>
-          <p>${item.description}</p>
-          <form><input type="button" id="edit-bookmark" value="Edit" /></form>
-          </div>
-          </div>
-          `;
+    return `
+    <div class="bookmarks-container" data-item-id="${item.id}">
+      <div class="bookmark js-bookmark">
+        <span>
+          ${item.title}
+          <p>Rating: ${item.rating}</p>
+        </span>
+        <span>
+          <input type="button" id="js-expand-bookmark" value="Collapse" /><input type="button" id="js-delete-bookmark" value="Delete" /><input type="button" id="js-edit-bookmark" value="Edit" />
+        </span>
+      </div>
+      <div class="bookmark-body">
+        <form><input type="button" id="js-visit-site" value="Visit Site" /></form>
+        <p>${item.desc}</p>
+      </div>
+    </div>
+      `;
   }
 }
 

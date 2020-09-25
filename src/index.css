@@ -22,6 +22,17 @@ main {
   align-items: center;
 }
 
+#bookmarks-toolbar {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#bookmarks-toolbar input {
+  margin: 10px 10px;
+}
+
 .button-container {
   display: flex;
   flex-flow: column wrap;
@@ -48,7 +59,15 @@ main {
 }
 
 .bookmark {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
   border: 1px dotted black;
+  padding: 0 10px;
+}
+
+.bookmark input {
+  margin: 10px 0;
 }
 
 .bookmark-body {
@@ -70,14 +89,7 @@ main {
   flex-flow: column wrap;
   align-items: center;
   border: 1px dotted black;
-}
-
-.button-container {
-  display: flex;
-  flex-flow: column wrap;
-  align-items: center;
-  justify-content: center;
-  width: 250px;
+  padding-bottom: 10px;
 }
 
 .add-bookmark-form form {
@@ -91,12 +103,29 @@ main {
 
 .add-bookmark-form textarea {
   resize: none;
-  width: 220px;
+  width: 242px;
   min-height: 150px;
 }
 
-#js-bookmark-description-edit {
+.js-bookmark-description-edit {
   resize: none;
   width: 400px;
   min-height: 150px;
+}
+
+.error-container {
+  border: 4px solid red;
+}
+
+.error-text {
+  color: red;
+}
+
+#js-rating {
+  width: 25px;
+}
+
+.https-text,
+.bookmark-error-text {
+  color: red;
 }

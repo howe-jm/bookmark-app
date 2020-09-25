@@ -1,7 +1,4 @@
 import $ from 'jquery';
-import css from './index.css';
-import normalize from 'normalize.css';
-import cuid from 'cuid';
 import templates from './templates';
 import store from './store';
 import api from './api';
@@ -26,9 +23,29 @@ function submitButtonListener() {
       rating = 1;
     }
     let desc = $('#js-bookmark-description').val();
+    if (desc === '' || desc === undefined) {
+      desc = 'No description entered.';
+    }
     let dataObj = { title: title, url: url, desc: desc, rating: rating, desc: desc };
-    api.addItem(dataObj);
-    render();
+    if (title === '' || title === undefined || url === '' || url === undefined || rating === undefined) {
+      $('#js-add-bookmark-form').addClass('error-container');
+      $('.error-text').removeClass('hidden');
+    } else if (url[4] != 's' || url[5] != ':') {
+      $('.https-error').addClass('error-container');
+      $('.https-text').removeClass('hidden');
+    } else {
+      api.addItem(dataObj).then(() =>
+        api
+          .fetchBookmarks()
+          .then((res) => res.json())
+          .then((items) => {
+            store.STORE = [];
+            items.forEach((item) => store.localPushItem(item));
+            render();
+          })
+      );
+      console.log('Did we make it here?');
+    }
   });
 }
 
@@ -40,7 +57,7 @@ function filterButtonListener() {
 }
 
 function bookmarkClickListener() {
-  $('#bookmarks-list').on('click', '.js-bookmark', (event) => {
+  $('#bookmarks-list').on('click', '#js-expand-bookmark', (event) => {
     const id = getItemIdFromElement(event.currentTarget);
     store.collapseElement(id);
     render();
@@ -51,14 +68,64 @@ function bookmarkDeleteListener() {
   $('#bookmarks-list').on('click', '#js-delete-bookmark', function (event) {
     event.preventDefault();
     let id = getItemIdFromElement(event.currentTarget);
-    store.deleteElement(id);
+    api.deleteItem(id).then(() => {
+      store.deleteElement(id);
+      render();
+    });
+  });
+}
+
+function bookmarkEditListener() {
+  $('#bookmarks-list').on('click', '#js-edit-bookmark', (event) => {
+    event.preventDefault();
+    let id = getItemIdFromElement(event.currentTarget);
+    store.editElement(id);
+    console.log('Clicked edit!');
     render();
   });
 }
 
-const getItemIdFromElement = function (item) {
+function bookmarkSubmitEditListner() {
+  $('#bookmarks-list').on('click', '.js-submit-edit', (event) => {
+    event.preventDefault();
+    let title = $('.js-bookmark-title-edit').val();
+    let url = $('.js-bookmark-url-edit').val();
+    let rating = $('.rating-edit').val();
+    if (rating > 5) {
+      rating = 5;
+    } else if (rating < 1) {
+      rating = 1;
+    }
+    let desc = $('.js-bookmark-description-edit').val();
+    if (desc === '' || desc === undefined) {
+      desc = 'No description entered.';
+    }
+    let dataObj = { title: title, url: url, desc: desc, rating: rating, desc: desc };
+    if (title === '' || title === undefined || url === '' || url === undefined || rating === undefined) {
+      $('#js-add-bookmark-form').addClass('error-container');
+      $('.error-text').removeClass('hidden');
+    } else if (url[4] != 's' || url[5] != ':') {
+      $('.https-error').addClass('error-container');
+      $('.https-text').removeClass('hidden');
+    } else {
+      api.addItem(dataObj).then(() =>
+        api
+          .fetchBookmarks()
+          .then((res) => res.json())
+          .then((items) => {
+            store.STORE = [];
+            items.forEach((item) => store.localPushItem(item));
+            render();
+          })
+      );
+      console.log('Did we make it here?');
+    }
+  });
+}
+
+function getItemIdFromElement(item) {
   return $(item).closest('.bookmarks-container').data('item-id');
-};
+}
 
 function render() {
   $('#bookmarks-toolbar').html(templates.toolbarTemplate());
@@ -73,13 +140,19 @@ function generateBookmarkString(store) {
   return stringArray.join('');
 }
 
+function bindListeners() {
+  addButtonListener();
+  submitButtonListener();
+  filterButtonListener();
+  bookmarkClickListener();
+  bookmarkDeleteListener();
+  bookmarkEditListener();
+  bookmarkSubmitEditListner();
+}
+
 export default {
-  addButtonListener,
-  filterButtonListener,
-  bookmarkClickListener,
+  bindListeners,
   getItemIdFromElement,
   render,
   generateBookmarkString,
-  bookmarkDeleteListener,
-  submitButtonListener,
 };

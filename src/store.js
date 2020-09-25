@@ -11,6 +11,8 @@ function findById(id) {
 }
 
 function localPushItem(obj) {
+  obj.collapsed = true;
+  obj.editing = false;
   this.STORE.push(obj);
 }
 
@@ -23,13 +25,13 @@ function collapseElement(id) {
   Object.assign(newItem, { collapsed: !newItem.collapsed });
 }
 
-function deleteElement(id) {
-  this.STORE = this.STORE.filter((currentItem) => currentItem.id !== id);
+function editElement(id) {
+  let newItem = this.findById(id);
+  Object.assign(newItem, { editing: true });
 }
 
-function editElement(id, newdata) {
-  let item = this.findById(id);
-  Object.assign(item, newData);
+function deleteElement(id) {
+  this.STORE = this.STORE.filter((currentItem) => currentItem.id !== id);
 }
 
 export default {
@@ -40,6 +42,6 @@ export default {
   findById,
   deleteElement,
   addElement,
-  editElement,
   localPushItem,
+  editElement,
 };

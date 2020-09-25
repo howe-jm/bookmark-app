@@ -1,11 +1,11 @@
 function fetchBookmarks() {
-  return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks`);
+  return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks/`);
 }
 
 function addItem(obj) {
   const newItem = JSON.stringify(obj);
 
-  return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks`, {
+  return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,7 +14,14 @@ function addItem(obj) {
   });
 }
 
+function deleteItem(id) {
+  return fetch(`https://thinkful-list-api.herokuapp.com/howe-jm/bookmarks/` + id, {
+    method: 'DELETE',
+  });
+}
+
 export default {
   fetchBookmarks,
   addItem,
+  deleteItem,
 };
