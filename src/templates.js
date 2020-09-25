@@ -38,7 +38,7 @@ function bookmarksList(item) {
     return `
     <div class="bookmarks-container" data-item-id="${item.id}">
         <div class="bookmark js-bookmark"><p><label for="bookmark-title-edit">Give your bookmark a name:</label></p>
-        <p><input type="text" name="bookmark-title-edit" id="js-bookmark-title-edit" value=${item.name}" placeholder="Bookmark title..." required></p></div>
+        <p><input type="text" name="bookmark-title-edit" id="js-bookmark-title-edit" value=${item.title}" placeholder="Bookmark title..." required></p></div>
         <div class="bookmark-body">
         </form>
         <p><label for="rating-edit">Rating (between 1 and 5):</label></p>
@@ -53,7 +53,7 @@ function bookmarksList(item) {
     `;
   } else {
     return `<div class="bookmarks-container" data-item-id="${item.id}">
-        <div class="bookmark js-bookmark"><p>${item.name}</p></div>
+        <div class="bookmark js-bookmark"><p>${item.title}</p></div>
         <div class="bookmark-body">
         <p><a href="${item.url}">${item.url}</a></p>
         <p class="bookmark-rating js-bookmark-rating">${item.rating}</p>

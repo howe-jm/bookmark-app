@@ -1,4 +1,5 @@
 import cuid from 'cuid';
+import api from './api';
 
 const STORE = [];
 
@@ -9,8 +10,12 @@ function findById(id) {
   return this.STORE.find((currentItem) => currentItem.id === id);
 }
 
-function addElement(obj) {
+function localPushItem(obj) {
   this.STORE.push(obj);
+}
+
+function addElement(obj) {
+  api.createItem(obj);
 }
 
 function collapseElement(id) {
@@ -36,4 +41,5 @@ export default {
   deleteElement,
   addElement,
   editElement,
+  localPushItem,
 };

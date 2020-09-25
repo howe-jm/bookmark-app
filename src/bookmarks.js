@@ -1,8 +1,10 @@
 import $ from 'jquery';
 import css from './index.css';
+import normalize from 'normalize.css';
 import cuid from 'cuid';
 import templates from './templates';
 import store from './store';
+import api from './api';
 
 function addButtonListener() {
   $('#bookmarks-toolbar').on('click', '#js-add-new-bookmark', function (event) {
@@ -24,8 +26,8 @@ function submitButtonListener() {
       rating = 1;
     }
     let desc = $('#js-bookmark-description').val();
-    let dataObj = { id: cuid(), name: title, url: url, rating: rating, description: desc, collapsed: true };
-    store.addElement(dataObj);
+    let dataObj = { title: title, url: url, desc: desc, rating: rating, desc: desc };
+    api.addItem(dataObj);
     render();
   });
 }
