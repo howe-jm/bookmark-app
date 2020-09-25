@@ -98,7 +98,6 @@ function bookmarkEditListener() {
     event.preventDefault();
     let id = getItemIdFromElement(event.currentTarget);
     store.editElement(id);
-    console.log('Clicked edit!');
     render();
   });
 }
@@ -147,8 +146,10 @@ function getItemIdFromElement(item) {
 }
 
 function render() {
+  store.filterResultsBy(store.sortedBy);
   $('#bookmarks-toolbar').html(templates.toolbarTemplate());
   $('#bookmarks-list').html(generateBookmarkString(store.STORE));
+  $('#js-filter-bookmarks').val(`${store.sortedBy}`);
 }
 
 function generateBookmarkString(store) {

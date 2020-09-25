@@ -37,7 +37,7 @@ function deleteElement(id) {
 }
 
 function filterResultsBy(val) {
-  this.STORE = this.STORE.filter((currentItem) => currentItem.rating <= this.sortedBy);
+  this.STORE = this.STORE.filter((currentItem) => currentItem.rating >= this.sortedBy);
 }
 
 function getItemURL(id) {

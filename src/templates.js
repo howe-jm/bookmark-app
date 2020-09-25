@@ -9,7 +9,7 @@ function toolbarTemplate() {
         <input type="button" id="js-add-new-bookmark" value="Add New" />
         <label for="select-rating">Minimum Rating: </label>
         <select name="select-rating" id="js-filter-bookmarks" />
-          <option value="Show All">Show All</option>
+          <option value="0">Rating</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
