@@ -4,7 +4,7 @@ import store from './store';
 import api from './api';
 
 function addButtonListener() {
-  $('#bookmarks-toolbar').on('click', '#js-add-new-bookmark', function (event) {
+  $('#js-main').on('click', '#js-add-new-bookmark', function (event) {
     event.preventDefault();
     store.addingBookmark = !store.addingBookmark;
     render();
@@ -12,45 +12,52 @@ function addButtonListener() {
 }
 
 function submitButtonListener() {
-  $('#bookmarks-toolbar').on('click', '#js-submit-bookmark', function (event) {
+  $('#js-main').on('click', '#js-submit-bookmark', function (event) {
     event.preventDefault();
-    let title = $('#js-bookmark-title').val();
-    let url = $('#js-bookmark-url').val();
-    let rating = $('#js-rating').val();
-    if (rating > 5) {
-      rating = 5;
-    } else if (rating < 1) {
-      rating = 1;
+    store.FORMDATA.title = $('#js-bookmark-title').val();
+    store.FORMDATA.url = $('#js-bookmark-url').val();
+    store.FORMDATA.rating = $('#js-rating').val();
+    if (store.FORMDATA.rating > 5) {
+      store.FORMDATA.rating = 5;
+    } else if (store.FORMDATA.rating < 1) {
+      store.FORMDATA.rating = 1;
     }
-    let desc = $('#js-bookmark-description').val();
-    if (desc === '' || desc === undefined) {
-      desc = 'No description entered.';
+    store.FORMDATA.desc = $('#js-bookmark-description').val();
+    if (store.FORMDATA.desc === '' || store.FORMDATA.desc === undefined) {
+      store.FORMDATA.desc = 'No description entered.';
     }
-    let dataObj = { title: title, url: url, desc: desc, rating: rating, desc: desc };
-    if (title === '' || title === undefined || url === '' || url === undefined || rating === undefined) {
-      $('#js-add-bookmark-form').addClass('error-container');
-      $('.error-text').removeClass('hidden');
-    } else if (url[4] != 's' || url[5] != ':') {
-      $('.https-error').addClass('error-container');
-      $('.https-text').removeClass('hidden');
+    if (store.FORMDATA.title === '' || store.FORMDATA.title === undefined || store.FORMDATA.url === '' || store.FORMDATA.url === undefined || store.FORMDATA.rating === undefined) {
+      store.incompleteForm = true;
+      render();
+    } else if (store.FORMDATA.url[4] != 's' || store.FORMDATA.url[5] != ':') {
+      store.httpsError = true;
+      render();
     } else {
-      api.addItem(dataObj).then(() =>
+      store.incompleteForm = 0;
+      store.httpsError = 0;
+      api.addItem(store.FORMDATA).then(() =>
         api
           .fetchBookmarks()
           .then((res) => res.json())
           .then((items) => {
             store.STORE = [];
             items.forEach((item) => store.localPushItem(item));
+            store.addingBookmark = !store.addingBookmark;
+            store.FORMDATA = {
+              title: '',
+              url: '',
+              rating: 1,
+              desc: '',
+            };
             render();
           })
       );
-      store.addingBookmark = !store.addingBookmark;
     }
   });
 }
 
 function filterSelectorListener() {
-  $('#bookmarks-toolbar').on('change', '#js-filter-bookmarks', function () {
+  $('#js-main').on('change', '#select-rating', function () {
     let rateVal = `${$(this).find(':selected').val()}`;
     store.sortedBy = rateVal;
     store.filterResultsBy();
@@ -66,7 +73,7 @@ function filterSelectorListener() {
 }
 
 function bookmarkClickListener() {
-  $('#bookmarks-list').on('click', '#js-expand-bookmark', (event) => {
+  $('#js-main').on('click', '#js-expand-bookmark', (event) => {
     const id = getItemIdFromElement(event.currentTarget);
     store.collapseElement(id);
     render();
@@ -74,7 +81,7 @@ function bookmarkClickListener() {
 }
 
 function bookmarkDeleteListener() {
-  $('#bookmarks-list').on('click', '#js-delete-bookmark', function (event) {
+  $('#js-main').on('click', '#js-delete-bookmark', function (event) {
     event.preventDefault();
     let id = getItemIdFromElement(event.currentTarget);
     api.deleteItem(id).then(() => {
@@ -85,7 +92,7 @@ function bookmarkDeleteListener() {
 }
 
 function bookmarkVisitSiteListner() {
-  $('#bookmarks-list').on('click', '.js-visit-site', (event) => {
+  $('#js-main').on('click', '.js-visit-site', (event) => {
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
     const url = store.getItemURL(id);
@@ -94,7 +101,7 @@ function bookmarkVisitSiteListner() {
 }
 
 function bookmarkEditListener() {
-  $('#bookmarks-list').on('click', '#js-edit-bookmark', (event) => {
+  $('#js-main').on('click', '#js-edit-bookmark', (event) => {
     event.preventDefault();
     let id = getItemIdFromElement(event.currentTarget);
     store.editElement(id);
@@ -103,40 +110,44 @@ function bookmarkEditListener() {
 }
 
 function bookmarkSubmitEditListner() {
-  $('#bookmarks-list').on('click', '.js-submit-edit', (event) => {
+  $('#js-main').on('click', '.js-submit-edit', (event) => {
     event.preventDefault();
-    let title = $('.js-bookmark-title-edit').val();
-    let url = $('.js-bookmark-url-edit').val();
-    let rating = $('.rating-edit').val();
-    if (rating > 5) {
-      rating = 5;
-    } else if (rating < 1) {
-      rating = 1;
+    store.EDITFORMDATA.title = $('.js-bookmark-title-edit').val();
+    store.EDITFORMDATA.url = $('.js-bookmark-url-edit').val();
+    store.EDITFORMDATA.rating = $('.rating-edit').val();
+    if (store.EDITFORMDATA.rating > 5) {
+      store.EDITFORMDATA.rating = 5;
+    } else if (store.EDITFORMDATA.rating < 1) {
+      store.EDITFORMDATA.rating = 1;
     }
-    let desc = $('.js-bookmark-description-edit').val();
-    if (desc === '' || desc === undefined) {
-      desc = 'No description entered.';
+    store.EDITFORMDATA.desc = $('.js-bookmark-description-edit').val();
+    if (store.EDITFORMDATA.desc === '' || store.EDITFORMDATA.desc === undefined) {
+      store.EDITFORMDATA.desc = 'No description entered.';
     }
-    let dataObj = { title: title, url: url, desc: desc, rating: rating, desc: desc };
-    if (title === '' || title === undefined || url === '' || url === undefined || rating === undefined) {
-      $('.bookmark-body-edit').addClass('error-container');
-      $('.bookmark-error-text').removeClass('hidden');
-    } else if (url[4] != 's' || url[5] != ':') {
-      $('.bookmark-body-edit').addClass('error-container');
-      $('.https-edit-error').removeClass('hidden');
+    if (store.EDITFORMDATA.title === '' || store.EDITFORMDATA.title === undefined || store.EDITFORMDATA.url === '' || store.EDITFORMDATA.url === undefined || store.EDITFORMDATA.rating === undefined) {
+      store.editIncompleteForm = true;
+      render();
+    } else if (store.EDITFORMDATA.url[4] != 's' || store.EDITFORMDATA.url[5] != ':') {
+      store.editHttpsError = true;
+      render();
     } else {
       let id = getItemIdFromElement(event.currentTarget);
-      api.editItem(dataObj, id).then(() =>
+      api.editItem(store.EDITFORMDATA, id).then(() =>
         api
           .fetchBookmarks()
           .then((res) => res.json())
           .then((items) => {
             store.STORE = [];
             items.forEach((item) => store.localPushItem(item));
+            store.EDITFORMDATA = {
+              title: '',
+              url: '',
+              rating: 1,
+              desc: '',
+            };
             render();
           })
       );
-      // Reserved for API PATCH call.
     }
   });
 }
@@ -147,9 +158,10 @@ function getItemIdFromElement(item) {
 
 function render() {
   store.filterResultsBy(store.sortedBy);
+  $('#js-main').html(templates.frameworkTemplate());
   $('#bookmarks-toolbar').html(templates.toolbarTemplate());
   $('#bookmarks-list').html(generateBookmarkString(store.STORE));
-  $('#js-filter-bookmarks').val(`${store.sortedBy}`);
+  $('#select-rating').val(`${store.sortedBy}`);
 }
 
 function generateBookmarkString(store) {

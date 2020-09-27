@@ -9,7 +9,7 @@ header {
   flex-flow: column wrap;
   align-items: center;
   border: 1px solid black;
-  width: 600px;
+  width: 400px;
 }
 
 main {
@@ -18,7 +18,7 @@ main {
   justify-content: space-around;
   border: 1px solid black;
   margin-top: -1px;
-  width: 600px;
+  width: 400px;
   align-items: center;
 }
 
@@ -54,7 +54,7 @@ main {
 .bookmarks-container {
   border: 1px solid black;
   width: 90%;
-  min-width: 500px;
+  min-width: 355px;
   margin: 2px 0;
 }
 
@@ -92,7 +92,7 @@ main {
 
 .bookmark-description {
   border: 1px dotted black;
-  min-width: 410px;
+  margin: 10px 10px;
 }
 
 .lower-button-container {
@@ -134,7 +134,7 @@ main {
 
 .js-bookmark-description-edit {
   resize: none;
-  width: 400px;
+  width: 320px;
   min-height: 150px;
 }
 

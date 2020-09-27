@@ -1,11 +1,27 @@
-import cuid from 'cuid';
 import api from './api';
 
 const STORE = [];
+const FORMDATA = {
+  title: '',
+  url: '',
+  rating: 1,
+  desc: '',
+};
+
+const EDITFORMDATA = {
+  title: '',
+  url: '',
+  rating: 1,
+  desc: '',
+};
 
 const addingBookmark = false;
 const editingBookmark = false;
 let sortedBy = '1';
+let httpsError = 0;
+let incompleteForm = 0;
+let editHttpsError = 0;
+let editIncompleteForm = 0;
 
 function findById(id) {
   return this.STORE.find((currentItem) => currentItem.id === id);
@@ -36,7 +52,7 @@ function deleteElement(id) {
   this.STORE = this.STORE.filter((currentItem) => currentItem.id !== id);
 }
 
-function filterResultsBy(val) {
+function filterResultsBy() {
   this.STORE = this.STORE.filter((currentItem) => currentItem.rating >= this.sortedBy);
 }
 
@@ -47,9 +63,15 @@ function getItemURL(id) {
 
 export default {
   STORE,
+  FORMDATA,
+  EDITFORMDATA,
   addingBookmark,
   editingBookmark,
   sortedBy,
+  httpsError,
+  incompleteForm,
+  editHttpsError,
+  editIncompleteForm,
   collapseElement,
   findById,
   deleteElement,
