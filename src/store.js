@@ -1,22 +1,22 @@
 import api from './api';
 
-const STORE = [];
-const FORMDATA = {
+let STORE = [];
+let FORMDATA = {
   title: '',
   url: '',
   rating: 1,
   desc: '',
 };
 
-const EDITFORMDATA = {
+let EDITFORMDATA = {
   title: '',
   url: '',
   rating: 1,
   desc: '',
 };
 
-const addingBookmark = false;
-const editingBookmark = false;
+let addingBookmark = false;
+let editingBookmark = false;
 let sortedBy = '1';
 let httpsError = 0;
 let incompleteForm = 0;
